@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+apply plugin: 'groovyx.grooid.groovy-android'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "nl.gjdenbesten.s3app"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        // Enabling multidex support.
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/services/org.codehaus.groovy.transform.ASTTransformation'
+        exclude 'META-INF/services/org.codehaus.groovy.runtime.ExtensionModule'
+        exclude 'META-INF/groovy-release-info.properties'
+    }
+}
+
+dependencies {
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+
+    // Groovy dependencies.
+    compile 'org.codehaus.groovy:groovy:2.4.7:grooid'
+
+    // SwissKnife Framework dependency.
+    compile 'com.arasthel:swissknife:1.4.0'
+
+    // Dependency voor handige bestandsgerelateerde functionaliteit.
+    compile 'org.apache.commons:commons-io:1.3.2'    // We gebruiken ALLEEN FilenameUtils.removeExtension() !!!
+
+    // Met okHttp wordt het werken met HTTP requests eenvoudiger.
+    compile 'com.squareup.okhttp3:okhttp:3.4.0'
+    compile 'com.squareup.okhttp3:okhttp-android-support:3.4.0'
+
+    // Dependency voor snelle (de)serialisatie van en naar JSON.
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.5'    // 2.8.0
+
+    // Dependency validatie (lijkt op JSR303/349 Bean Validation).
+//    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
+
+}

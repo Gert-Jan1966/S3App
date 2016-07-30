@@ -1,4 +1,4 @@
-package nl.ou
+package nl.ou.s3app
 
 import groovy.transform.CompileStatic
 import nl.ou.s3.common.LocationDto

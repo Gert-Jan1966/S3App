@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.transform.CompileStatic
-import nl.ou.VolatileLocationData
 import nl.ou.s3.common.LocationDto
 import nl.ou.s3.common.SymmetricKeyDto
 import nl.ou.s3app.domain.JsonSelfie

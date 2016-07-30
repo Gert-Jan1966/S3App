@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import groovy.transform.CompileStatic
-import nl.ou.VolatileLocationData
 import nl.ou.s3.common.LocationDto
 
 @CompileStatic

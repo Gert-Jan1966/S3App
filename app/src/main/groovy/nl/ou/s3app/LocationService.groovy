@@ -12,6 +12,11 @@ import android.util.Log
 import groovy.transform.CompileStatic
 import nl.ou.s3.common.LocationDto
 
+/**
+ * Deze service probeert -om de 20 seconden- de huidige locatie vast te stellen. Als deze service de gemeten locatie
+ * "goed genoeg" vindt, dan wordt deze locatie ook in <i>VolatileLocationData</i> opgeslagen.<br>
+ * De code is (gewijzigd) overgenomen van https://developer.android.com/guide/topics/location/strategies.html
+ */
 @CompileStatic
 class LocationService extends Service {
     private final String TAG = "LocationService";

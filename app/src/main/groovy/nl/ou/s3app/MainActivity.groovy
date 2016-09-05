@@ -1,5 +1,7 @@
 package nl.ou.s3app
 
+import android.accounts.Account
+import android.accounts.AccountManager
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,12 +13,12 @@ import android.provider.MediaStore
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.util.Patterns
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
 import android.widget.Toast
 import com.arasthel.swissknife.SwissKnife
-//import com.arasthel.swissknife.annotations.Extra
 import com.arasthel.swissknife.annotations.InjectView
 import com.arasthel.swissknife.annotations.OnBackground
 import com.arasthel.swissknife.annotations.OnItemClick
@@ -34,6 +36,7 @@ import okhttp3.Response
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
+import java.util.regex.Pattern
 
 import static android.graphics.Bitmap.createScaledBitmap
 import static org.apache.commons.io.FilenameUtils.removeExtension
@@ -71,12 +74,14 @@ class MainActivity extends AppCompatActivity {
     /** Lijst voor bekende thumbnails. */
     private List<Uri> thumbnails = []
 
-//    @Extra
+    /**  */
     private SymmetricKeyDto symmetricKeyDto
 
     /** View voor de gallery. */
     @InjectView
     private ListView selfieListView
+
+    private String userEmailAddress
 
     /**
      * Initialisatie van MainActivity.
@@ -100,6 +105,8 @@ class MainActivity extends AppCompatActivity {
         // Vaststellen te gebruiken paths.
         selfiesPath = createAppDataDir(Constants.SELFIES_DIR)
         thumbnailsPath = createAppDataDir(Constants.THUMBNAILS_DIR)
+
+        obtainAndDisplayUserEmailAddress()
 
         initSelfieAdadapter()
     }
@@ -406,6 +413,23 @@ class MainActivity extends AppCompatActivity {
                 .delete()
                 .build()
         client.newCall(deleteRequest).execute()
+    }
+
+    /**
+     * Bepaal het emailaccount van de gebruiker (zoals google.com en gmail.com).
+     */
+    private void obtainAndDisplayUserEmailAddress() {
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS
+        Account[] accounts = AccountManager.get(this).getAccounts()
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                userEmailAddress = account.name
+                Toast.makeText(this, "Geregistreerde gebruiker: ${userEmailAddress}", Toast.LENGTH_LONG).show()
+                return
+            }
+        }
+
+        Toast.makeText(this, "Geen emailadres aangetroffen!", Toast.LENGTH_LONG).show()
     }
 
 }

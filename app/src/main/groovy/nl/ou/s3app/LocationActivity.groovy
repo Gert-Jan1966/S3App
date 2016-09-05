@@ -14,7 +14,7 @@ import nl.ou.s3.common.S3LocationPolicy
 import nl.ou.s3.common.SymmetricKeyDto
 
 /**
- * Invoer voor S3LocationPolicy data.
+ * Invoerschermpje voor S3LocationPolicy data.
  */
 @CompileStatic
 class LocationActivity extends AppCompatActivity {

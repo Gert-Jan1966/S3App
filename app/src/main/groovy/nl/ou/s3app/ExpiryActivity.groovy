@@ -18,7 +18,7 @@ import nl.ou.s3.common.S3ExpirationPolicy
 import nl.ou.s3.common.SymmetricKeyDto
 
 /**
- * Invoer voor S3ExpirationPolicy data.
+ * Invoerschermpje voor S3ExpirationPolicy data.
  */
 @CompileStatic
 class ExpiryActivity extends AppCompatActivity {

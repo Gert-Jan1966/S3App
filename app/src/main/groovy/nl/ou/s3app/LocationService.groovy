@@ -86,13 +86,9 @@ class LocationService extends Service {
         boolean fromSameProvider = isSameProvider(location.getProvider(), currentBestLocation.getProvider())
 
         // Bepaal kwaliteit van de locatie a.d.h.v. tijdigheid en precisie.
-        if (isMoreAccurate) {
-            return true
-        } else if (isNewer && !isLessAccurate) {
-            return true
-        } else if (isNewer && !isSignificantlyLessAccurate && fromSameProvider) {
-            return true
-        }
+        if (isMoreAccurate) return true
+        if (isNewer && !isLessAccurate) return true
+        if (isNewer && !isSignificantlyLessAccurate && fromSameProvider) return true
 
         false
     }
@@ -106,6 +102,8 @@ class LocationService extends Service {
         }
 
         provider1 == provider2
+
+//        !provider1 ? provider2 == null : provider1 == provider2
     }
 
     @Override

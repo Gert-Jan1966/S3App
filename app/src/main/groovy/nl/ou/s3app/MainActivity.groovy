@@ -81,6 +81,7 @@ class MainActivity extends AppCompatActivity {
     @InjectView
     private ListView selfieListView
 
+    /**  */
     private String userEmailAddress
 
     /**
@@ -95,7 +96,7 @@ class MainActivity extends AppCompatActivity {
         locationServiceIntent = new Intent(this, LocationService)
         startService(locationServiceIntent)
 
-        // Laat Android networkcalls in de UI-thread accepteren.
+        // Laat Android networkcalls in de UI-thread accepteren!
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build())
 
         // Nodig voor de SwissKnife annotaties.
@@ -128,7 +129,7 @@ class MainActivity extends AppCompatActivity {
     @OnItemClick(R.id.selfieListView)
     void onItemClick(int position) {
         try {
-            new SelfieDialog(this, thumbnails, position).show()
+            new SelfieDialog(this, thumbnails, position, userEmailAddress).show()
         } catch (IllegalStateException ise) {
             Log.e(TAG, ise.message)
 
@@ -344,11 +345,11 @@ class MainActivity extends AppCompatActivity {
         SecretKey symKey = KeyGenerator.getInstance(Constants.CIPHER_ALGORITHM).generateKey()
         String key = symKey.encoded.encodeBase64()
 
-        symmetricKeyDto = new SymmetricKeyDto(key: key)
+        symmetricKeyDto = new SymmetricKeyDto(key: key, owner: userEmailAddress)
         def jsonMessage = new ObjectMapper().writeValueAsString(symmetricKeyDto)
 
         def postRequest = new Request.Builder()
-                .url(Constants.SERVER_KEY_URL)
+                .url("${Constants.SERVER_KEY_URL}?user=${userEmailAddress}")
                 .post(RequestBody.create(Constants.JSON, jsonMessage))
                 .build()
 
@@ -393,7 +394,7 @@ class MainActivity extends AppCompatActivity {
         def jsonMessage = new ObjectMapper().writeValueAsString(symmetricKeyDto)
 
         def putRequest = new Request.Builder()
-                .url("${Constants.SERVER_KEY_URL}/${symmetricKeyDto.id}")
+                .url("${Constants.SERVER_KEY_URL}/${symmetricKeyDto.id}?user=${userEmailAddress}")
                 .put(RequestBody.create(Constants.JSON, jsonMessage))
                 .build()
 
@@ -409,14 +410,14 @@ class MainActivity extends AppCompatActivity {
     @OnBackground
     private void deleteKeyFromServer(String keyId) {
         def deleteRequest = new Request.Builder()
-                .url("${Constants.SERVER_KEY_URL}/${keyId}")
+                .url("${Constants.SERVER_KEY_URL}/${keyId}?user=${userEmailAddress}")
                 .delete()
                 .build()
         client.newCall(deleteRequest).execute()
     }
 
     /**
-     * Bepaal het emailaccount van de gebruiker (zoals google.com en gmail.com).
+     * Bepaal het emailaccount van de gebruiker (zoals google.com en gmail.com) en toon deze in een Toast.
      */
     private void obtainAndDisplayUserEmailAddress() {
         Pattern emailPattern = Patterns.EMAIL_ADDRESS

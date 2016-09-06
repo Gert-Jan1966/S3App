@@ -41,12 +41,12 @@ class SelfieDialog extends Dialog {
     /**
      * Constructor.
      */
-    SelfieDialog(Context context, List<Uri> thumbnails, int position) {
+    SelfieDialog(Context context, List<Uri> thumbnails, int position, String userEmailAddress) {
         super(context)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.layout_dialog)
 
-        // Networkcalls in UI-thread!
+        // Sta networkcalls in UI-thread toe!
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build())
 
         // Bepaal S3-bestandsnaam vanuit het path van de geselecteerde thumbnail.
@@ -57,7 +57,7 @@ class SelfieDialog extends Dialog {
         JsonSelfie jsonSelfie = new ObjectMapper().readValue(new File(fileName), JsonSelfie)
 
         // Haal de symKey op van de server & vervolg deze method alleen indien symKey gevonden wordt.
-        SecretKey symKey = retrieveSymKeyFromServer(jsonSelfie.keyId)
+        SecretKey symKey = retrieveSymKeyFromServer(jsonSelfie.keyId, userEmailAddress)
         if (!symKey) return
 
         // Ontsleutel de selfie en leeg daarna de gebruikte buffer van het selfiebestand.
@@ -77,7 +77,7 @@ class SelfieDialog extends Dialog {
      * @return Gewenste symmetric key; null indien een fout optreedt,
      *         waarbij de foutmelding via een TextView wordt getoond.
      */
-    private SecretKey retrieveSymKeyFromServer(String symKeyId) {
+    private SecretKey retrieveSymKeyFromServer(String symKeyId, String userEmailAddress) {
 
         // Ophalen meest recente locatie.
         LocationDto locationDto = VolatileLocationData.estimatedLocation
@@ -89,7 +89,7 @@ class SelfieDialog extends Dialog {
         def jsonMessage = new ObjectMapper().writeValueAsString(locationDto)
         Log.d(TAG, jsonMessage)
         def keyRequest = new Request.Builder()
-                .url("${Constants.SERVER_KEY_URL}/${symKeyId}")
+                .url("${Constants.SERVER_KEY_URL}/${symKeyId}?user=${userEmailAddress}")
                 .post(RequestBody.create(Constants.JSON, jsonMessage))
                 .build()
 
@@ -97,7 +97,7 @@ class SelfieDialog extends Dialog {
         Response getResponse = client.newCall(keyRequest).execute()
         if (!getResponse.successful) {
             def errorTextView = (TextView) findViewById(R.id.errorTextView)
-            errorTextView.text = getResponse.peekBody(200L).string()
+            errorTextView.text = getResponse.peekBody(400L).string()
             return null
         }
 

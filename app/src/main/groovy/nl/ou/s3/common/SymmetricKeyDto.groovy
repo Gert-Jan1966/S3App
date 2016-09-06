@@ -10,6 +10,8 @@ class SymmetricKeyDto implements Serializable {
 
     String id
 
+    String owner
+
     S3ExpirationPolicy expirationPolicy
 
     S3LocationPolicy locationPolicy

@@ -50,9 +50,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp-android-support:3.4.0'
 
     // Dependency voor snelle (de)serialisatie van en naar JSON.
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.5'    // 2.8.0
-
-    // Dependency validatie (lijkt op JSR303/349 Bean Validation).
-//    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.5'
 
 }

@@ -21,8 +21,8 @@ class Constants {
     static final String THUMBNAILS_DIR = "thumbnails"
 
     // Definities voor toegang tot de server
-    static final String SERVER_IP = "http://145.20.144.40"
-    static final String SERVER_PORT = "8080"
+    static final String SERVER_IP = "https://145.20.144.40"
+    static final String SERVER_PORT = "8080"    // 8443 voor HTTPS onder Tomcat, indien geconfigureerd.
     static final String SERVER_URL = "${SERVER_IP}:${SERVER_PORT}/S3Server"
     static final String SERVER_KEY_URL = "${SERVER_URL}/symmetrickey"
 
@@ -30,6 +30,6 @@ class Constants {
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8")
 
     // Te gebruiken algorime voor symmetrische encryptie.
-    static final String CIPHER_ALGORITHM = "AES"    // AES.
+    static final String CIPHER_ALGORITHM = "AES"
 
 }

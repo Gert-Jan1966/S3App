@@ -16,14 +16,6 @@ class LocationDto implements Serializable {
     Double latitude
     Double longitude
 
-//    /** Hoogtecoordinaat. */
-//    Boolean hasAltitude
-//    Double altitude
-
-    /** Nauwkeurigheid. */
-//    Boolean hasAccuracy
-//    Float accuracy
-
     @Override
     String toString() {
         "Time: ${new Date(time)}, Latitude: ${latitude}, Longitude: ${longitude}"

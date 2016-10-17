@@ -20,7 +20,7 @@ class SymmetricKeyDto implements Serializable {
 
     @Override
     String toString() {
-        "id = ${id} - key = ${key}"
+        "id = ${id}; owner = ${owner}; key = ${key}"
     }
 
 }

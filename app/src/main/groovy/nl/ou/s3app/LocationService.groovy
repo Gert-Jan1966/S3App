@@ -102,8 +102,6 @@ class LocationService extends Service {
         }
 
         provider1 == provider2
-
-//        !provider1 ? provider2 == null : provider1 == provider2
     }
 
     @Override

@@ -74,6 +74,7 @@ class SelfieDialog extends Dialog {
      * Ophalen gewenste symmetric key van server o.b.v. verstrekte <i>symKeyId</i>.
      *
      * @param symKeyId id van gewenste symmetric key.
+     * @param userEmailAddress registratie-emailadres van de 'vragende' gebruiker.
      * @return Gewenste symmetric key; null indien een fout optreedt,
      *         waarbij de foutmelding via een TextView wordt getoond.
      */

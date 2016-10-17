@@ -74,14 +74,14 @@ class MainActivity extends AppCompatActivity {
     /** Lijst voor bekende thumbnails. */
     private List<Uri> thumbnails = []
 
-    /**  */
+    /** Definitie t.b.v. JSON structuur voor communicatie met S3Server.  */
     private SymmetricKeyDto symmetricKeyDto
 
     /** View voor de gallery. */
     @InjectView
     private ListView selfieListView
 
-    /**  */
+    /** Android registratie-emailadres van de gebruiker. */
     private String userEmailAddress
 
     /**
@@ -113,7 +113,7 @@ class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Uitzetten locationService in Destroy fase van de Activity lifecycle.
      */
     @Override
     void onDestroy() {
@@ -133,7 +133,7 @@ class MainActivity extends AppCompatActivity {
         } catch (IllegalStateException ise) {
             Log.e(TAG, ise.message)
 
-            // TODO: na afsluiten blijft app toch nog op de een of andere manier actief.
+            // TODO: na afsluiten lijkt de app toch nog in de Android-applijst te staan.
             new AlertDialog.Builder(this)
                     .setMessage("${ise.message}\n\nS3App wordt afgesloten.")
                     .setPositiveButton(R.string.locationerror_dialog_ok, {
@@ -189,6 +189,9 @@ class MainActivity extends AppCompatActivity {
         true
     }
 
+    /**
+     * Het menu heeft maar 1 optie: het camera-icon.
+     */
     @Override
     boolean onOptionsItemSelected(MenuItem item) {
         invokeCamera()
@@ -388,7 +391,7 @@ class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Deze method is bedoeld om S3 policydata aan reeds opgeslagen keys toe te voegen.
+     * Deze method is in eerste instantie bedoeld om S3 policydata aan reeds opgeslagen keys toe te voegen.
      */
     private void updateKeyOnServer() {
         def jsonMessage = new ObjectMapper().writeValueAsString(symmetricKeyDto)
@@ -430,7 +433,7 @@ class MainActivity extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(this, "Geen emailadres aangetroffen!", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Geen registratie-emailadres aangetroffen!", Toast.LENGTH_LONG).show()
     }
 
 }

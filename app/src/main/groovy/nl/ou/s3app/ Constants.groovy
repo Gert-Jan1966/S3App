@@ -21,7 +21,7 @@ class Constants {
     static final String THUMBNAILS_DIR = "thumbnails"
 
     // Definities voor toegang tot de server
-    static final String SERVER_IP = "https://145.20.144.40"
+    static final String SERVER_IP = "http://145.20.144.40"
     static final String SERVER_PORT = "8080"    // 8443 voor HTTPS onder Tomcat, indien geconfigureerd.
     static final String SERVER_URL = "${SERVER_IP}:${SERVER_PORT}/S3Server"
     static final String SERVER_KEY_URL = "${SERVER_URL}/symmetrickey"
